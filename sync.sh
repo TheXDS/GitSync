@@ -1,6 +1,6 @@
 #! /bin/bash
 set GIT_TERMINAL_PROMPT=0
-for j in $(ls -d) ; do
+for j in $(ls -d */) ; do
     cd $j
     if [ -d $j/.git ] ; then
         echo Repositorio en $j:
