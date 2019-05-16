@@ -1,3 +1,4 @@
+#! /usr/bin/pwsh
 ﻿$env:GIT_TERMINAL_PROMPT=0
 foreach ($j in Get-ChildItem -Attributes Directory)
 {
