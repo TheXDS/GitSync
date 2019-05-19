@@ -5,10 +5,11 @@ param (
     [switch]$Help
 )
 
-version="1.1.0"
+$scriptVersion = "1.1.0"
+$env:GIT_TERMINAL_PROMPT=0
 
 function Print-Version {
-    "GitSync v$version"
+    "GitSync v$scriptVersion"
 }
 
 function Print-Help {
@@ -32,7 +33,6 @@ if ($Version) {
     Return
 }
 
-﻿$env:GIT_TERMINAL_PROMPT=0
 foreach ($j in Get-ChildItem -Attributes Directory)
 {
     cd $j
