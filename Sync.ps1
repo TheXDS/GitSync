@@ -13,7 +13,7 @@ function Print-Version {
 }
 
 function Print-Help {
-    printVersion
+    Print-Version
     "Uso:"
     " $($MyInvocation.MyCommand.Name) [-Quiet]"
     " $($MyInvocation.MyCommand.Name) -Version"
@@ -36,7 +36,7 @@ if ($Version) {
 foreach ($j in Get-ChildItem -Attributes Directory)
 {
     cd $j
-    if ([System.IO.Directory]::Exists("$j\.git"))
+    if ([System.IO.Directory]::Exists("$($j.FullName)\.git"))
     {
         if ($Quiet) { 
             git fetch > nul
