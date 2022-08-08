@@ -2,6 +2,7 @@
 param (
     [switch]$Quiet,
     [switch]$Version,
+    [switch]$AddSafe,
     [switch]$Help
 )
 
@@ -15,10 +16,11 @@ function Print-Version {
 function Print-Help {
     Print-Version
     "Uso:"
-    " $($MyInvocation.MyCommand.Name) [-Quiet]"
+    " $($MyInvocation.MyCommand.Name) [-Quiet] [-AddSafe]"
     " $($MyInvocation.MyCommand.Name) -Version"
     " $($MyInvocation.MyCommand.Name) -Help"
     "Opciones:"
+    " -AddSafe: Agrega los repositorios a la lista de confianza de Git."
     " -Quiet:   Ejecutar de manera silenciosa."
     " -Version: Mostrar información de la versión del script"
     " -Help:    Mostrar información sobre el uso de este script"
@@ -38,14 +40,18 @@ foreach ($j in Get-ChildItem -Attributes Directory)
     cd $j
     if ([System.IO.Directory]::Exists("$($j.FullName)\.git"))
     {
+        if ($AddSafe)
+        {
+            git config --global --add safe.directory "%(prefix)/$($j.FullName)".Replace("\","/")
+        }
         if ($Quiet) { 
-            git fetch > nul
+            git fetch -p > nul
             git pull > nul
         }
         else
         {
-            "Repositorio en $($j.Name):"
-            git fetch --all
+            "Repositorio en $($j.Name) (Rama: $(git branch --show-current)):"
+            git fetch --all -p
             git pull
             Write-Output ""        
         }
